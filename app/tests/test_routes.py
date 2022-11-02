@@ -52,9 +52,7 @@ def test_predict_allFields():
     response = client.get('/predict', query_string = data)
     assert response.status_code == 200
     assert response.headers.get('Content-Type') == 'application/json'
-    assert type(json.loads(output)['sex'] == str)
-    assert type(json.loads(output)['age'] == int)
-    assert type(json.loads(output)['schoolsup'] == bool)
+    assert type(json.loads(output)['isQualified'] == bool)
 
 def test_predict_sex_missing():
     app = Flask(__name__)
