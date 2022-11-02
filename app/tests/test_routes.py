@@ -50,6 +50,7 @@ def test_predict_allFields():
         "absences": 6
     }
     response = client.get('/predict', query_string = data)
+    output = response.get_data()
     assert response.status_code == 200
     assert response.headers.get('Content-Type') == 'application/json'
     assert type(json.loads(output)['isQualified'] == bool)
