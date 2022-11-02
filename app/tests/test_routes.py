@@ -1,6 +1,7 @@
 from flask import Flask
 import pytest
 from app.handlers.routes import configure_routes
+import json
 
 
 def test_base_route():
@@ -49,9 +50,11 @@ def test_predict_allFields():
         "absences": 6
     }
     response = client.get('/predict', query_string = data)
-    output = response.get_data(as_text = True)
     assert response.status_code == 200
     assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['sex'] == str)
+    assert type(json.loads(output)['age'] == int)
+    assert type(json.loads(output)['schoolsup'] == bool)
 
 def test_predict_sex_missing():
     app = Flask(__name__)
@@ -90,6 +93,8 @@ def test_predict_sex_missing():
     response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['error'] == str)
 
 def test_predict_age_missing():
     app = Flask(__name__)
@@ -128,6 +133,8 @@ def test_predict_age_missing():
     response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['error'] == str)
 
 def test_predict_sex_invalid():
     app = Flask(__name__)
@@ -167,6 +174,9 @@ def test_predict_sex_invalid():
     response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['error'] == str)
+
 
 def test_predict_age_invalid():
     app = Flask(__name__)
@@ -206,6 +216,8 @@ def test_predict_age_invalid():
     response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['error'] == str)
 
 def test_predict_sex_and_age_missing():
     app = Flask(__name__)
@@ -243,4 +255,6 @@ def test_predict_sex_and_age_missing():
     response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
+    assert response.headers.get('Content-Type') == 'application/json'
+    assert type(json.loads(output)['error'] == str)
 
