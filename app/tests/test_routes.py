@@ -48,10 +48,9 @@ def test_predict_allFields():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
-    output = response.get_data()
+    response = client.get('/predict', query_string = data)
+    output = response.get_data(as_text = True)
     assert response.status_code == 200
-    assert output == data
     assert response.headers.get('Content-Type') == 'application/json'
 
 def test_predict_sex_missing():
@@ -88,7 +87,7 @@ def test_predict_sex_missing():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
+    response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
 
@@ -126,7 +125,7 @@ def test_predict_age_missing():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
+    response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
 
@@ -165,7 +164,7 @@ def test_predict_sex_invalid():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
+    response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
 
@@ -204,7 +203,7 @@ def test_predict_age_invalid():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
+    response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
 
@@ -241,7 +240,7 @@ def test_predict_sex_and_age_missing():
         "health": 3,
         "absences": 6
     }
-    response = client.get('/predict', json = data)
+    response = client.get('/predict', query_string = data)
     output = response.get_data()
     assert response.status_code == 400
 
