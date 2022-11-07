@@ -35,6 +35,7 @@ tomli="2.0.1"
 urllib3="1.26.12"
 Werkzeug="2.2.2"
 ipykernel="6.17.0"
+auto-sklearn="0.15.0"
 
 [dev-packages]
 pandas = "*"
