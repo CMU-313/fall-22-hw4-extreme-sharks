@@ -63,4 +63,4 @@ def configure_routes(app):
         query_df = pd.DataFrame(model_input_series)
         prediction = clf.predict(query_df)[0]
 
-        return jsonify({'isQualified': prediction == 1})
+        return jsonify({'isQualified': bool(prediction == 1)})
