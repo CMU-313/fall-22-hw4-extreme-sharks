@@ -45,7 +45,7 @@ def test_predict_allFields():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
@@ -85,7 +85,7 @@ def test_predict_sex_missing():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
@@ -125,7 +125,7 @@ def test_predict_age_missing():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
@@ -166,7 +166,7 @@ def test_predict_sex_invalid():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
@@ -208,7 +208,7 @@ def test_predict_age_invalid():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
@@ -247,7 +247,7 @@ def test_predict_sex_and_age_missing():
         "freetime": 3,
         "goout": 4,
         "Dalc": 1,
-        "Wcal": 1,
+        "Walc": 1,
         "health": 3,
         "absences": 6
     }
