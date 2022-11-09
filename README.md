@@ -1,77 +1,35 @@
-# HW4 Starter Code and Instructions
+# ML-powered applicant performance predictor
 
-Please consult the [homework assignment](https://cmu-313.github.io//assignments/hw4) for additional context and instructions for this code.
+This microservice tries to predict whether an applicant is considered to be
+qualified for a college program.
 
-## pipenv
+## Implementation details
 
-[pipenv](https://pipenv.pypa.io/en/latest) is a packaging tool for Python that solves some common problems associated with the typical workflow using pip, virtualenv, and the good old requirements.txt.
+We chose to train the model using all the provided features, except the ones that are not relevant to the Carnegie Mellon University setting. The features we removed are:
+* `school`, since the applicants to CMU usually don’t come from one of the two Portuguese schools in the data set.
+* `G1` and `G2`, since applicants to CMU usually don’t have grades on a 0–20 scale and grades in the A–F scale can’t be directly mapped to them.
 
-### Installation
+We use [auto-sklearn](https://automl.github.io/auto-sklearn/master/) to train the model and generate predictions. This package automatically applies several ML strategies and identifies which ones work the best.
 
-#### Prereqs
+Using auto-sklearn, we were able to reach 84.8% of accuracy on the training set. This is better than the provided model, which only reaches 79.7% of accuracy under the same circumstances.
 
-- The version of Python you and your team will be using (version greater than 3.8)
-- pip package manager is updated to latest version
-- For additional resources, check out [this link](https://pipenv-fork.readthedocs.io/en/latest/install.html#installing-pipenv)
+## Get Started
 
-#### Mac OS
+### Requirements
+* Python 3.8+
+* Pipenv with the repository dependencies installed (run `pipenv install`) 
+* Linux ([required by auto-sklearn](https://automl.github.io/auto-sklearn/master/installation.html#windows-macos-compatibility), but it is also possible to use the `mfeurer/auto-sklearn:master` Docker image instead and install Flask manually).
 
-To install pipenv from the command line, execute the following:
+### Train the model
+The code used to train the model is in the `model_build.ipynb` Jupyter notebook.
 
-```terminal
-sudo -H pip install -U pipenv
-```
+### Start the server
 
-#### Windows OS
+To run the Flask API server, execute the following commands from the `app` directory in the pip venv shell.
 
-The same instructions for Mac OS **should** work for windows, but if it doesn't, follow the instructions [here](https://www.pythontutorial.net/python-basics/install-pipenv-windows).
-
-### Usage
-
-#### Downloading Packages
-
-The repository contains `Pipfile` that declares which packages are necessary to run the `model_build.ipnyb`.
-To install packages declared by the Pipfile, run `pipenv install` in the command line from the root directory.
-
-You might want to use additional packages throughout the assignment.
-To do so, run `pipenv install [PACKAGE_NAME]`, as you would install python packages using pip.
-This should also update `Pipfile` and add the downloaded package under `[packages]`.
-Note that `Pipfile.lock` will also be updated with the specific versions of the dependencies that were installed.
-Any changes to `Pipfile.lock` should also be committed to your Git repository to ensure that all of your team is using the same dependency versions.
-
-#### Virtual Environment
-
-Working in teams can be a hassle since different team members might be using different versions of Python.
-To avoid this issue, you can create a python virtual environment, so you and your team will be working with the same version of Python and PyPi packages.
-Run `pipenv shell` in your command line to activate this project's virtual environment.
-If you have more than one version of Python installed on your machine, you can use pipenv's `--python` option to specify which version of Python should be used to create the virtual environment.
-If you want to learn more about virtual environments, read [this article](https://docs.python-guide.org/dev/virtualenvs/#using-installed-packages).
-You can also specify which version of python you and your team should use under the `[requires]` section in `Pipfile`.
-
-## Jupyter Notebook
-
-You should run your notebook in the virtual environment from pipenv.
-To do, you should run the following command from the root of your repository:
-
-```terminal
-pipenv run jupyter notebook
-```
-
-## API Endpoints
-
-You should also use pipenv to run your Flask API server.
-To do so, execute the following commands from the `app` directory in the pip venv shell.
-
-
-Set an environment variable for FLASK_APP.
-For Mac and Linux:
+Set an environment variable for FLASK_APP:
 ```terminal
 export FLASK_APP=app.py
-```
-
-For Windows:
-```terminal
-set FLASK_APP=app
 ```
 
 To run:
@@ -79,26 +37,18 @@ To run:
 pipenv run flask run
 ```
 
-Or if you're in the pipenv shell, run:
-```terminal
-flask run
-```
-
-You can alter the port number that is used by the Flask server by changing the following line in `app/app.py`:
-
-```python
-app.run(host="0.0.0.0", debug=True, port=80)
-```
-
-## Testing
-
-To run tests, execute the following command from the `app` directory:
+You can alter the port number that is used by the Flask server by using the `--port` option:
 
 ```terminal
-pytest
+pipenv run flask run --port 8080
 ```
 
-If you're not in the Pipenv shell, then execute the following command from the `app` directory:
+### Use the API endpoint
+The `/predict` API endpoint allows you to know the prediction for some input data. A complete API documentation is available in `openapi.yml`.
+
+### Run the automated tests
+
+To run the automated tests, execute the following command from the `app` directory:
 
 ```terminal
 pipenv run pytest
